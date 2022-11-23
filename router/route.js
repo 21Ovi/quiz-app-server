@@ -15,6 +15,6 @@ router
   .route("/result")
   .get(controller.getResult) // Get Request
   .post(controller.storeResult) // Post Request
-  .delete(controller.dropQuestions); // Delete Request
+  .delete(controller.dropResult); // Delete Request
 
 export default router;
