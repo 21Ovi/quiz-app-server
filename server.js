@@ -6,7 +6,7 @@ import { config } from "dotenv";
 import router from "./router/route.js";
 
 //  import connection file
-import connect from "./server/conn.js";
+import connect from "./database/conn.js";
 
 const app = express();
 
