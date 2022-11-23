@@ -2,6 +2,7 @@ import Questions from "../models/questionSchema.js";
 import Result from "../models/resultSchema.js";
 
 import questions, { answers } from "../database/data.js";
+import resultSchema from "../models/resultSchema.js";
 
 //  Get all questions
 export const getQuestions = async (req, res) => {
@@ -39,15 +40,37 @@ export const dropQuestions = async (req, res) => {
 
 // Get all result
 export const getResult = async (req, res) => {
-  res.json("result API GET request");
+  try {
+    const r = await Result.find();
+    res.json(r);
+  } catch (error) {
+    res.json({ error });
+  }
 };
 
 // Post all result
 export const storeResult = async (req, res) => {
-  res.json("result API POST request");
+  try {
+    const { username, result, attepmts, points, achived } = req.body;
+    if (!username && !result) throw new Error("Data not provided");
+
+    resultSchema.create(
+      { username, result, attepmts, points, achived },
+      (err, data) => {
+        res.json({ msg: "Result Saved Successfully" });
+      }
+    );
+  } catch (error) {
+    res.json({ error });
+  }
 };
 
 // Delete all result
 export const dropResult = async (req, res) => {
-  res.json("result API Delete request");
+  try {
+    await Result.deleteMany();
+    res.json({ msg: "Results Deleted Successfully" });
+  } catch (error) {
+    res.json({ error });
+  }
 };
